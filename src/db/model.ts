@@ -1,15 +1,8 @@
-import mongoose, { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
+import { ISnippet } from "./interface";
 
-interface IUser {
-  name: string;
-  age: number;
-  avatar?: string;
-}
-
-const userSchema = new Schema<IUser>({
-  name: { type: String, required: true },
-  age: { type: Number, required: true },
-  avatar: String,
+const snippetSchema = new Schema<ISnippet>({
+  snippet: { type: String, required: true },
 });
 
-export const User = model<IUser>("User", userSchema);
+export const Snippet = model<ISnippet>("snippets", snippetSchema);

@@ -1,17 +1,32 @@
 import express from "express";
-import { User } from "../db/model";
+import { Snippet } from "../db/model";
 
 const snippetRoutes = express.Router();
 
-snippetRoutes.post("/snippet", async (req, res) => {
-  const user = new User({
-    name: "Kevin Heart",
-    age: 86,
-    theguydata: "somtext",
+snippetRoutes.post("/", async (req, res) => {
+  const snippet = new Snippet({
+    snippet: req.body.snippet,
   });
-  const data = await user.save();
-  console.log("data => ", data);
-  res.send("check snippet");
+  try {
+    const data = await snippet.save();
+    console.log("data => ", data);
+    res.send(data);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Something went wrong while saving snippet" });
+  }
+});
+
+snippetRoutes.get("/:key", async (req, res) => {
+  try {
+    const data = await Snippet.findById(req.params.key);
+    res.json(data);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Something went wrong with fetching snippet" });
+  }
 });
 
 export default snippetRoutes;
