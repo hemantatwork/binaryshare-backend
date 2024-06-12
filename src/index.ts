@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import snippetRoutes from "./routes/snippetRoutes";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -6,6 +7,7 @@ import bodyParser from "body-parser";
 dotenv.config({ path: ".env" });
 
 const app = express();
+app.use(cors());
 // Body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
